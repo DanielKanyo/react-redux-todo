@@ -1,0 +1,21 @@
+body {
+  margin: 0 auto;
+  padding: 0;
+  width: 600px;
+  height: 100vh;
+}
+
+.todo-input {
+  width: 100%;
+  margin: 20px 0 5px;
+  padding: 10px 15px;
+  outline: none;
+  border-radius: 10px;
+  border: 1px solid #0eb36e;
+  font-size: 18px;
+  color: #0eb36e;
+}
+
+.todo-input::-webkit-input-placeholder {
+  color: #cecece;
+}
