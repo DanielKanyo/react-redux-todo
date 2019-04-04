@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import addTodo from '../../Store/Actions/TodoActions';
+import { addTodo, removeTodo } from '../../Store/Actions/TodoActions';
+import ListItem from './ListItem';
+import PropTypes from 'prop-types';
 
 class TodoList extends Component {
 
@@ -24,9 +26,13 @@ class TodoList extends Component {
     });
   }
 
+  handleDelete = id => {
+    this.props.removeTodo(id);
+  }
+
   render() {
     const { todos } = this.props;
-    
+
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
@@ -38,14 +44,22 @@ class TodoList extends Component {
             placeholder="Add todo..."
             value={this.state.text}
           />
-
-          <ul>
-            {todos && todos.map((todo, i) => <li key={todo.id}>{todo.text}</li>)}
-          </ul>
         </form>
+
+        <React.Fragment>
+          {
+            todos && todos.map(todo => <ListItem handleDelete={this.handleDelete} key={todo.id} id={todo.id} value={todo.text} />)
+          }
+        </React.Fragment>
       </div>
     )
   }
+}
+
+TodoList.propTypes = {
+  todos: PropTypes.array,
+  addTodo: PropTypes.func,
+  removeTodo: PropTypes.func
 }
 
 const mapStateToProps = (state) => {
@@ -56,7 +70,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addTodo: (todo) => dispatch(addTodo(todo))
+    addTodo: (todo) => dispatch(addTodo(todo)),
+    removeTodo: (id) => dispatch(removeTodo(id))
   }
 }
 

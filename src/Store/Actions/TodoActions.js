@@ -8,4 +8,11 @@ export const addTodo = (text) => {
   }
 }
 
-export default addTodo;
+export const removeTodo = (id) => {
+  nextTodoId--
+  
+  return {
+    type: 'REMOVE_TODO',
+    id
+  }
+}
