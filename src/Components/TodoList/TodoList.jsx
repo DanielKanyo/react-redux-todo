@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addTodo, removeTodo } from '../../Store/Actions/TodoActions';
+import { addTodo, removeTodo, toggleTodo } from '../../Store/Actions/TodoActions';
 import ListItem from './ListItem';
 import PropTypes from 'prop-types';
 
@@ -30,6 +30,10 @@ class TodoList extends Component {
     this.props.removeTodo(id);
   }
 
+  handleToggle = id => {
+    this.props.toggleTodo(id);
+  }
+
   render() {
     const { todos } = this.props;
 
@@ -48,7 +52,9 @@ class TodoList extends Component {
 
         <React.Fragment>
           {
-            todos && todos.map(todo => <ListItem handleDelete={this.handleDelete} key={todo.id} id={todo.id} value={todo.text} />)
+            todos && todos.map(todo => {
+              return <ListItem key={todo.id} handleDelete={this.handleDelete} handleToggle={this.handleToggle} todo={todo} />
+            })
           }
         </React.Fragment>
       </div>
@@ -59,7 +65,8 @@ class TodoList extends Component {
 TodoList.propTypes = {
   todos: PropTypes.array,
   addTodo: PropTypes.func,
-  removeTodo: PropTypes.func
+  removeTodo: PropTypes.func,
+  toggleTodo: PropTypes.func
 }
 
 const mapStateToProps = (state) => {
@@ -70,8 +77,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addTodo: (todo) => dispatch(addTodo(todo)),
-    removeTodo: (id) => dispatch(removeTodo(id))
+    addTodo: todo => dispatch(addTodo(todo)),
+    removeTodo: id => dispatch(removeTodo(id)),
+    toggleTodo: id => dispatch(toggleTodo(id))
   }
 }
 

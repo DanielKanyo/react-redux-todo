@@ -44,3 +44,7 @@ form {
   cursor: pointer;
   padding: 8px 4px;
 }
+
+.todo-text {
+  cursor: pointer;
+}

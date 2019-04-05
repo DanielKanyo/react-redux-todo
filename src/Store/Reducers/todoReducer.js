@@ -1,5 +1,6 @@
 const ADD = 'ADD_TODO';
 const REMOVE = 'REMOVE_TODO';
+const TOGGLE = 'TOGGLE_TODO';
 
 const todoReducer = (state = [], action) => {
   switch (action.type) {
@@ -8,15 +9,18 @@ const todoReducer = (state = [], action) => {
         ...state,
         {
           id: action.id,
-          text: action.text
+          text: action.text,
+          completed: false
         }
       ]
 
     case REMOVE:
-      return [
-        ...state.slice(0, action.id),
-        ...state.slice(action.id + 1)
-      ]
+      return state.filter(item => item.id !== action.id);
+
+    case TOGGLE:
+      return state.map(todo =>
+        todo.id === action.id ? { ...todo, completed: !todo.completed } : todo
+      ) 
 
     default:
       return state;

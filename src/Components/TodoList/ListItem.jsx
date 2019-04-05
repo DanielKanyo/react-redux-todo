@@ -1,19 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ListItem = ({ value, id, handleDelete }) => {
+const completedStyle = {
+  textDecoration: 'line-through'
+}
+
+const uncompletedStyle = {
+  textDecoration: 'none'
+}
+
+const ListItem = ({ todo, handleDelete, handleToggle }) => {
   return (
     <div className="list-item">
-      <div>{value}</div>
-      <div className="delete-btn" onClick={() => {handleDelete(id)}}>x</div>
+      <div
+        className="todo-text"
+        style={todo.completed ? completedStyle : uncompletedStyle}
+        onClick={() => { handleToggle(todo.id) }}
+      >
+        {todo.text}
+      </div>
+      <div className="delete-btn" onClick={() => { handleDelete(todo.id) }}>x</div>
     </div>
   )
 }
 
 ListItem.propTypes = {
-  value: PropTypes.string,
-  id: PropTypes.number,
-  handleDelete: PropTypes.func
+  todo: PropTypes.object.isRequired,
+  handleDelete: PropTypes.func.isRequired,
+  handleToggle: PropTypes.func.isRequired
 }
 
 export default ListItem;
